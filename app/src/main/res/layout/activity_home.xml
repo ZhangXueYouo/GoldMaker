@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".Home">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="415dp"
+        android:layout_height="99dp"
+        android:background="@drawable/header_bg"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/welcome"
+            android:textColor="@color/colorwhite"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageMenu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_menu"
+            app:layout_constraintBottom_toBottomOf="@+id/textHeader"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textHeader" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/LayoutReminder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_bg"
+        android:gravity="center"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="20dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+        app:layout_constraintEnd_toStartOf="@id/LayoutIncome">
+
+        <ImageView
+            android:id="@+id/reminder"
+            android:layout_width="125dp"
+            android:layout_height="97dp"
+            android:layout_margin="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:contentDescription="@string/app_name"
+            android:onClick="ReminderView"
+            android:padding="8dp"
+            android:src="@drawable/reminder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Reminder"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/reminder"
+            tools:layout_editor_absoluteX="-30dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LayoutIncome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="20dp"
+        app:layout_constraintStart_toEndOf="@+id/LayoutReminder"
+        app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imageVie"
+            android:layout_width="119dp"
+            android:layout_height="98dp"
+            android:layout_margin="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/app_name"
+            android:padding="8dp"
+            android:src="@drawable/income"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Income"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/reminder"
+            tools:layout_editor_absoluteX="-30dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LayoutSavings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="20dp"
+        android:background="@drawable/rectangle_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/LayoutExpenses"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LayoutReminder">
+
+        <ImageView
+            android:id="@+id/imageSavings"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/app_name"
+            android:padding="8dp"
+            android:src="@drawable/savings"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Savings"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/reminder"
+            tools:layout_editor_absoluteX="-30dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LayoutExpenses"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rectangle_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/LayoutSavings"
+        app:layout_constraintTop_toBottomOf="@+id/LayoutIncome">
+
+        <ImageView
+            android:id="@+id/imageExpenses"
+            android:layout_width="119dp"
+            android:layout_height="98dp"
+            android:layout_margin="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/app_name"
+            android:padding="8dp"
+            android:src="@drawable/expenses"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Expenses"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/reminder"
+            tools:layout_editor_absoluteX="-30dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LayoutBudget"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="20dp"
+        android:background="@drawable/rectangle_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/LayoutTransfer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LayoutSavings">
+
+        <ImageView
+            android:id="@+id/imageBudget"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/app_name"
+            android:padding="8dp"
+            android:src="@drawable/budget"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Budget"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/reminder"
+            tools:layout_editor_absoluteX="-30dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LayoutTransfer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rectangle_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/LayoutBudget"
+        app:layout_constraintTop_toBottomOf="@+id/LayoutExpenses">
+
+        <ImageView
+            android:id="@+id/Transfer"
+            android:layout_width="119dp"
+            android:layout_height="98dp"
+            android:layout_margin="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:onClick="transferView"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/app_name"
+            android:padding="8dp"
+            android:src="@drawable/transfer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+            tools:ignore="MissingConstraints"
+
+            />
+
+        <TextView
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Transfer"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/reminder"
+            tools:layout_editor_absoluteX="-30dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:text="@string/log_out"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

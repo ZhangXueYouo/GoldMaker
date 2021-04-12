@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="newBalance" type="id"></item>
+    <item name="setMoney" type="id"></item>
+    <item name="Savings" type="id"></item>
+    <item name="textView5" type="id"></item>
+    <item name="Amount" type="id"></item>
+    <item name="q" type="id"></item>
+    <item name="w" type="id"></item>
+    <item name="e" type="id"></item>
+    <item name="r" type="id"></item>
+    <item name="t" type="id"></item>
+    <item name="tt" type="id"></item>
+    <item name="bb" type="id"></item>
+    <item name="Tra" type="id"></item>
+
+</resources>

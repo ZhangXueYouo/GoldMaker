@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/sunset1"
+    tools:context=".Transfer"
+
+    >
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        />
+
+    <TextView
+
+        android:layout_width="336dp"
+        android:layout_height="87dp"
+        android:layout_gravity="center"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="@string/transfer_between_accounts"
+        android:textColor="@color/colorwhite"
+        android:textSize="26sp"
+        android:textStyle="italic" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <EditText
+        android:id="@+id/setMoney"
+        android:layout_width="295dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:background="#ffe1b3"
+        android:fontFamily="sans-serif-light"
+        android:hint="Set Your new Balance:"
+        android:inputType="numberSigned|numberDecimal"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="22dp" />
+
+    <Button
+        android:id="@+id/SetButton"
+        android:layout_width="280dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_horizontal"
+        android:height="56dp"
+        android:background="@drawable/buttom1"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="Set now"
+        android:textColor="#FFFFFF"
+        android:textScaleX="1"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="22dp" />
+
+    <TextView
+        android:id="@+id/Savings"
+        android:layout_width="296dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:background="#ffd8b3"
+        android:fontFamily="sans-serif-light"
+        android:text="Your Savings Account Balance:"
+        android:textColor="#E8978A8A"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <LinearLayout
+        android:layout_width="297dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:text="Transfer Amount: $"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/Amount"
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffd699"
+            android:ems="10"
+            android:inputType="numberSigned|numberDecimal" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <LinearLayout
+        android:layout_width="297dp"
+        android:layout_height="104dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/newB"
+            android:layout_width="136dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:text="Your new balance in APP :"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/newBalance"
+            android:layout_width="139dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <LinearLayout
+        android:layout_width="297dp"
+        android:layout_height="143dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/TransferButton"
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:height="56dp"
+        android:background="@drawable/buttom1"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="Transfer now"
+        android:textColor="#FFFFFF"
+        android:textScaleX="1"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+
+
+</LinearLayout>

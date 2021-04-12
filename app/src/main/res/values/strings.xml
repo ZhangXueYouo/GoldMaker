@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">User_Authentication</string>
+    <string name="username">Email</string>
+    <string name="password">password</string>
+    <string name="login">login</string>
+    <string name="not_registered">notregister</string>
+    <string name="registered">register</string>
+    <string name="ConfirmPassword">ConfirmPassword</string>
+    <string name="FName">FName</string>
+    <string name="LName">LName</string>
+    <string name="ButtonRegister">Register</string>
+    <string name="Registered">Registered?</string>
+    <string name="sign_up">signup</string>
+    <string name="forgot_password">forgotpassword</string>
+    <string name="email">email</string>
+    <string name="changepass">Change Password</string>
+    <string name="Notification">Get Notification</string>
+    <string name="transfer_between_accounts">Transfer Money  </string>
+    <string name="welcome">Welcome!</string>
+    <string name="log_out">Log Out</string>
+    <string name="expense">Expense</string>
+</resources>
