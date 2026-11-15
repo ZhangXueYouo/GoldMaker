@@ -34,6 +34,7 @@ android:background="@drawable/background">
     android:layout_marginTop="10dp"
     android:background="#ffffff"
     android:paddingLeft="20dp"
+    android:inputType="textPassword"
     android:hint="@string/password"/>
 
 <EditText
@@ -43,6 +44,7 @@ android:background="@drawable/background">
     android:layout_marginTop="10dp"
     android:background="#ffffff"
     android:paddingLeft="20dp"
+    android:inputType="textPassword"
     android:hint="@string/ConfirmPassword" />
 
 <EditText

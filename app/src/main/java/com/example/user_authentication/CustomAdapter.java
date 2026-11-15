@@ -6,24 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 /*jasleen bains
  * T00651489*/
 
 public class CustomAdapter extends BaseAdapter {
-    Context context;
-    ArrayList<String> eventList = new ArrayList<>();
-    ArrayList<String> subeventList = new ArrayList<>();
-    LayoutInflater inflter;
+    private final List<String> eventList;
+    private final List<String> subeventList;
+    private final LayoutInflater inflater;
 
-    public CustomAdapter(Context applicationContext, ArrayList<String> eventList, ArrayList<String> subeventList) {
-        this.context = context;
+    public CustomAdapter(Context context, List<String> eventList, List<String> subeventList) {
         this.eventList = eventList;
         this.subeventList = subeventList;
-        inflter = (LayoutInflater.from(applicationContext));
+        this.inflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -33,19 +30,21 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return eventList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflter.inflate(R.layout.activity_listview, null);
-        TextView headtitle = (TextView) view.findViewById(R.id.headtitle);
-        TextView subtitle = (TextView) view.findViewById(R.id.subtitle);
+        if (view == null) {
+            view = inflater.inflate(R.layout.activity_listview, viewGroup, false);
+        }
+        TextView headtitle = view.findViewById(R.id.headtitle);
+        TextView subtitle = view.findViewById(R.id.subtitle);
         headtitle.setText(eventList.get(i));
         subtitle.setText(subeventList.get(i));
         return view;

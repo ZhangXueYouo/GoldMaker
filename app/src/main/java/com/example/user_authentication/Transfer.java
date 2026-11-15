@@ -3,102 +3,93 @@ package com.example.user_authentication;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class Transfer extends AppCompatActivity {
 
     private EditText setMoney;
-    private EditText Amount;
-    private Button Set, TransferButton;
-    private TextView Savings;
-    private TextView newBalance;
+    private EditText amount;
+    private TextView savingsText;
+    private TextView newBalanceText;
 
-    ArrayList arrayList;
-
+    /** Money currently left in savings. */
+    private double savings = 0;
+    /** Total amount transferred so far. */
+    private double transferred = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer);
 
-        Set = findViewById(R.id.SetButton);
-        TransferButton = findViewById(R.id.TransferButton);
+        Button setButton = findViewById(R.id.SetButton);
+        Button transferButton = findViewById(R.id.TransferButton);
         setMoney = findViewById(R.id.setMoney);
-        Amount = findViewById(R.id.Amount);
-        Savings = findViewById(R.id.Savings);
-        newBalance = findViewById(R.id.newBalance);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        amount = findViewById(R.id.Amount);
+        savingsText = findViewById(R.id.Savings);
+        newBalanceText = findViewById(R.id.newBalance);
 
-        ArrayList<Integer> values = new ArrayList<Integer>();
-
-        values.add(0);
-        values.add(0);
-        values.add(0);
-
-        Set.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                double temp = 0;
-
-                String str = setMoney.getText().toString().trim();//trim() to remove the first empty space
-                if (TextUtils.isEmpty(str)) {
-                    builder.setMessage("Please enter a value to set.");
-                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface arg0, int arg1) {
-                        }
-                    });
-                    AlertDialog ad = builder.create();
-                    ad.show();
-
-                } else {
-                    temp = Double.parseDouble(setMoney.getText().toString());
-                    Savings.setText(temp + " $");
-                    int moneyset = Integer.parseInt(setMoney.getText().toString());
-                    values.set(0, moneyset);
-                }
+        setButton.setOnClickListener(view -> {
+            Double value = readAmount(setMoney, "Please enter a value to set.");
+            if (value == null) {
+                return;
             }
+            savings = value;
+            refresh();
         });
 
-        TransferButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                double temp2 = 0;
-
-                String str = Amount.getText().toString().trim();//trim() to remove the first empty space
-                if (TextUtils.isEmpty(str)) {
-                    builder.setMessage("Please enter a value to transfer .");
-                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface arg0, int arg1) {
-                        }
-                    });
-                    AlertDialog ad = builder.create();
-                    ad.show();
-
-                } else {
-                    //temp2 = Double.parseDouble(Amount.getText().toString());
-                    double transAmount = Double.parseDouble(Amount.getText().toString());
-                    int Intrans = (int) transAmount;
-                    values.set(1, Intrans);
-                    values.set(2, values.get(2) + values.get(1));
-                    Savings.setText(values.get(0) - values.get(1) + " $");
-                    values.set(0, values.get(0) - values.get(1));
-                    newBalance.setText(values.get(2) + " $");
-                }
-
+        transferButton.setOnClickListener(view -> {
+            Double value = readAmount(amount, "Please enter a value to transfer.");
+            if (value == null) {
+                return;
             }
+            if (value > savings) {
+                showMessage("Insufficient savings for this transfer.");
+                return;
+            }
+            savings -= value;
+            transferred += value;
+            refresh();
         });
+    }
+
+    /** Parses a positive amount from the field, or shows an error and returns null. */
+    private Double readAmount(EditText field, String emptyMessage) {
+        String str = field.getText().toString().trim();
+        if (TextUtils.isEmpty(str)) {
+            showMessage(emptyMessage);
+            return null;
+        }
+        double value;
+        try {
+            value = Double.parseDouble(str);
+        } catch (NumberFormatException e) {
+            showMessage("Please enter a valid number.");
+            return null;
+        }
+        if (value <= 0) {
+            showMessage("Amount must be greater than 0.");
+            return null;
+        }
+        return value;
+    }
+
+    private void refresh() {
+        savingsText.setText(String.format(Locale.US, "%.2f $", savings));
+        newBalanceText.setText(String.format(Locale.US, "%.2f $", transferred));
+    }
+
+    private void showMessage(String message) {
+        new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton("Ok", null)
+                .show();
     }
 }

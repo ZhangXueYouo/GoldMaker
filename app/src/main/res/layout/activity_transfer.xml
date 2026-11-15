@@ -40,7 +40,7 @@
         android:background="#ffe1b3"
         android:fontFamily="sans-serif-light"
         android:hint="Set Your new Balance:"
-        android:inputType="numberSigned|numberDecimal"
+        android:inputType="numberDecimal"
         android:textSize="17sp"
         android:textStyle="bold" />
 
@@ -107,7 +107,7 @@
             android:layout_weight="1"
             android:background="#ffd699"
             android:ems="10"
-            android:inputType="numberSigned|numberDecimal" />
+            android:inputType="numberDecimal" />
     </LinearLayout>
 
     <Space

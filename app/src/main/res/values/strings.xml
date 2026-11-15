@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">User_Authentication</string>
+    <string name="app_name">GoldMaker</string>
     <string name="username">Email</string>
     <string name="password">password</string>
     <string name="login">login</string>

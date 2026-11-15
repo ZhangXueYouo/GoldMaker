@@ -1,27 +1,23 @@
 package com.example.user_authentication;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,23 +25,22 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static com.example.user_authentication.App.CHANNEL_1_ID;
 /*jasleen bains
  * T00651489*/
 
-public class Dashboard extends AppCompatActivity{
-    FloatingActionButton floatingActionButton;
-    ListView listView;
-    ArrayList<String> eventList = new ArrayList<>();
-    ArrayList<String> subeventList = new ArrayList<>();
+public class Dashboard extends AppCompatActivity {
+    private static final long NOTIFICATION_DELAY_MS = 5000;
+
+    private final ArrayList<String> eventList = new ArrayList<>();
+    private final ArrayList<String> subeventList = new ArrayList<>();
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private NotificationManagerCompat notificationManager;
-    int i = 1;
+    private CustomAdapter customAdapter;
+    private int notificationId = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,118 +48,74 @@ public class Dashboard extends AppCompatActivity{
         setContentView(R.layout.activity_dashboard);
         setTitle("Dashboard");
 
+        notificationManager = NotificationManagerCompat.from(this);
 
-        notificationManager = NotificationManagerCompat.from(Dashboard.this);
-
-        floatingActionButton = findViewById(R.id.floatingActionButton);
-        listView = findViewById(R.id.listview);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.activity_listview, R.id.headtitle, eventList);
-        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), eventList, subeventList);
+        FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionButton);
+        ListView listView = findViewById(R.id.listview);
+        customAdapter = new CustomAdapter(this, eventList, subeventList);
         listView.setAdapter(customAdapter);
 
+        floatingActionButton.setOnClickListener(view -> showAddEventDialog());
+    }
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Button cancel;
-                Button save;
-                EditText eventname;
-                EditText eventdescription;
-                TextView datepick;
+    private void showAddEventDialog() {
+        ViewGroup root = findViewById(android.R.id.content);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.activity_dialog_box, root, false);
+        Button cancel = dialogView.findViewById(R.id.cancel_button);
+        Button save = dialogView.findViewById(R.id.save_button);
+        EditText eventName = dialogView.findViewById(R.id.eventname);
+        EditText eventDescription = dialogView.findViewById(R.id.eventdescription);
+        TextView datePick = dialogView.findViewById(R.id.datepick);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Dashboard.this);
-                ViewGroup viewGroup = findViewById(android.R.id.content);
-                View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.activity_dialog_box, viewGroup, false);
-                cancel = dialogView.findViewById(R.id.cancel_button);
-                save = dialogView.findViewById(R.id.save_button);
-                eventname = dialogView.findViewById(R.id.eventname);
-                eventdescription = dialogView.findViewById(R.id.eventdescription);
-                datepick = dialogView.findViewById(R.id.datepick);
-                builder.setView(dialogView);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+        AlertDialog alertDialog = new AlertDialog.Builder(this).setView(dialogView).create();
+        alertDialog.show();
 
-
-                datepick.setOnClickListener(new View.OnClickListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void onClick(View view) {
-
-                        Calendar c  = Calendar.getInstance();
-                        int year = c.get(Calendar.YEAR);
-                        int month = c.get(Calendar.MONTH);
-                        int day = c.get(Calendar.DAY_OF_MONTH);
-
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(Dashboard.this,
-                                new DatePickerDialog.OnDateSetListener() {
-
-                                    @Override
-                                    public void onDateSet(DatePicker view, int year,
-                                                          int monthOfYear, int dayOfMonth) {
-
-                                        datepick.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
-                                    }
-                                }, year, month, day);
-                        datePickerDialog.show();
-                    }
-
-                });
-
-                save.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        eventList.add(eventname.getText().toString().trim());
-                        subeventList.add(eventdescription.getText().toString().trim() + "(" + datepick.getText().toString().trim() +")");
-                        customAdapter.notifyDataSetChanged();
-                        shownotification(eventname.getText().toString().trim(),eventdescription.getText().toString().trim() + "(" + datepick.getText().toString().trim() +")");
-                        alertDialog.cancel();
-                    }
-                });
-
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alertDialog.cancel();
-                    }
-                });
-
-
-                }
+        datePick.setOnClickListener(v -> {
+            Calendar c = Calendar.getInstance();
+            new DatePickerDialog(this,
+                    (picker, year, month, day) -> datePick.setText(day + "-" + (month + 1) + "-" + year),
+                    c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
+                    .show();
         });
 
+        save.setOnClickListener(v -> {
+            String name = eventName.getText().toString().trim();
+            if (TextUtils.isEmpty(name)) {
+                Toast.makeText(this, "Please enter a reminder name", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            String desc = eventDescription.getText().toString().trim()
+                    + " (" + datePick.getText().toString().trim() + ")";
+            eventList.add(name);
+            subeventList.add(desc);
+            customAdapter.notifyDataSetChanged();
+            showNotification(name, desc);
+            alertDialog.dismiss();
+        });
+
+        cancel.setOnClickListener(v -> alertDialog.dismiss());
     }
 
-    private void shownotification(String heading, String desc) {
+    private void showNotification(String heading, String desc) {
+        Intent notificationIntent = new Intent(this, NotificationActivity.class);
 
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(NotificationActivity.class);
+        stackBuilder.addNextIntent(notificationIntent);
 
-        i++;
-                int time = 5000;
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-                Intent notificationIntent = new Intent(Dashboard.this, NotificationActivity.class);
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(heading)
+                .setContentText(desc)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build();
 
-                TaskStackBuilder stackBuilder = TaskStackBuilder.create(Dashboard.this);
-                stackBuilder.addParentStack(NotificationActivity.class);
-                stackBuilder.addNextIntent(notificationIntent);
-
-                PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-                Notification notification2 = new NotificationCompat.Builder(Dashboard.this, CHANNEL_1_ID)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle(heading)
-                        .setContentText(desc)
-                        .setContentIntent(pendingIntent)
-                        .build();
-
-
-
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        notificationManager.notify(i, notification2);
-                    }
-                }, time);
+        // Capture the id now so each reminder gets its own notification.
+        final int id = notificationId++;
+        handler.postDelayed(() -> notificationManager.notify(id, notification), NOTIFICATION_DELAY_MS);
     }
-
 }

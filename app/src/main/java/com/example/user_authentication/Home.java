@@ -12,6 +12,13 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // Log Out: return to the login screen and clear the back stack.
+        findViewById(R.id.button).setOnClickListener(v -> {
+            Intent login = new Intent(this, MainActivity.class);
+            login.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(login);
+        });
     }
 
 

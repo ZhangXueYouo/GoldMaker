@@ -2,9 +2,7 @@ package com.example.user_authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,41 +10,41 @@ import android.widget.Toast;
  * T00651489*/
 public class Forgot_Password extends AppCompatActivity {
 
-    EditText mTextnewpass;
-    EditText mTextnewpasscon;
-    Button mButtonchangepass;
-    DatabaseHelper dbhelper;
+    public static final String EXTRA_USER = "User";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot__password);
 
-        dbhelper = new DatabaseHelper(this);
-        mTextnewpass = findViewById(R.id.mTextnewpass);
-        mTextnewpasscon = findViewById(R.id.mTextnewpasscon);
-        mButtonchangepass = findViewById(R.id.mbuttonchangepass);
-        String user = getIntent().getExtras().getString("User");
+        String user = getIntent().getStringExtra(EXTRA_USER);
+        if (user == null) {
+            finish();
+            return;
+        }
 
+        DatabaseHelper dbhelper = new DatabaseHelper(this);
+        EditText mTextnewpass = findViewById(R.id.mTextnewpass);
+        EditText mTextnewpasscon = findViewById(R.id.mTextnewpasscon);
+        Button mButtonchangepass = findViewById(R.id.mbuttonchangepass);
 
-        mButtonchangepass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mTextnewpass.getText().toString().trim().equals(mTextnewpasscon.getText().toString().trim()))
-                {
-                    long rest = dbhelper.updateUser(user, mTextnewpass.getText().toString().trim());
-                    if (rest > 0) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                    }
-                    else{
-                        Toast.makeText(Forgot_Password.this, "Please try again",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-                    Toast.makeText(Forgot_Password.this, "Password do not match",Toast.LENGTH_SHORT).show();
-                }
+        mButtonchangepass.setOnClickListener(view -> {
+            String pwd = mTextnewpass.getText().toString().trim();
+            String cnfPwd = mTextnewpasscon.getText().toString().trim();
+            if (pwd.isEmpty()) {
+                toast("Please enter a new password");
+            } else if (!pwd.equals(cnfPwd)) {
+                toast("Passwords do not match");
+            } else if (dbhelper.updateUser(user, pwd) > 0) {
+                toast("Password changed");
+                finish(); // back to the login screen
+            } else {
+                toast("Please try again");
             }
         });
+    }
+
+    private void toast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

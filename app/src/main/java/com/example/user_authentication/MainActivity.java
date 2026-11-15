@@ -38,11 +38,12 @@ public class MainActivity extends AppCompatActivity {
                 String user = mTextUsername.getText().toString().trim();
                 String pwd = mTextPassword.getText().toString().trim();
                 if(!user.isEmpty() && !pwd.isEmpty() ) {
-                    Boolean res = dbhelper.checkUser(user, pwd);
-                    if (res) {
+                    if (dbhelper.checkUser(user, pwd)) {
                         Intent intent = new Intent(getApplicationContext(), Home.class);
                         startActivity(intent);
                         Toast.makeText(MainActivity.this, "Successfully Logged In", Toast.LENGTH_SHORT).show();
+                        // Don't let "back" from Home return to the login form with the password filled in.
+                        finish();
                     } else {
                         Toast.makeText(MainActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
                     }
@@ -68,10 +69,14 @@ public class MainActivity extends AppCompatActivity {
 
                 String user = mTextUsername.getText().toString().trim();
 
-                if (dbhelper.checkUser(user))
+                if (user.isEmpty())
+                {
+                    Toast.makeText(MainActivity.this, "Please enter your username first", Toast.LENGTH_SHORT).show();
+                }
+                else if (dbhelper.checkUser(user))
                 {
                     Intent intent = new Intent(getApplicationContext(), Forgot_Password.class);
-                    intent.putExtra("User",user);
+                    intent.putExtra(Forgot_Password.EXTRA_USER, user);
                     startActivity(intent);
                 }
                 else
